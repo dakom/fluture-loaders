@@ -14,4 +14,8 @@ Typescript definitions are bundled in.
 
 # Status
 
-Not fully tested yet - but should be done soon ;)
+Not battle-tested yet...
+
+# Usage
+
+Probably easiest just to look at [the loaders](src/loaders) directly :)
