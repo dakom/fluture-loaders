@@ -4,3 +4,14 @@
 
 Wraps various media loaders into Fluture primitives.
 
+Includes Xhr, as well as Audio, Blob, and Image helpers.
+
+Typescript definitions are bundled in.
+
+# Installation
+
+`npm install --save fluture-loaders`
+
+# Status
+
+Not fully tested yet - but should be done soon ;)
