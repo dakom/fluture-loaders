@@ -18,4 +18,4 @@ Not battle-tested yet...
 
 # Usage
 
-Probably easiest just to look at [the loaders](src/loaders) directly :)
+Probably easiest just to look at [the loaders](src/lib/loaders) directly :)
