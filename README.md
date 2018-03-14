@@ -2,7 +2,7 @@
 
 # Fluture loaders 
 
-Wraps various media loaders into Fluture primitives.
+Wraps various loaders into [Fluture](https://github.com/fluture-js/Fluture) primitives.
 
 Includes Xhr, as well as Audio, Blob, and Image helpers.
 
