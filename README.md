@@ -20,7 +20,7 @@ Not battle-tested yet, API may change
 
 No docs yet, so for now it's probably easiest just to look at [the source](src/lib) directly :)
 
-The easiest way for most use cases is to use the `fetch*` or `fetchUrl*` [helpers](src/lib/helpers/Helpers.ts):
+The easiest way for most use cases is to use the [fetch* helpers](src/lib/helpers/Helpers.ts):
 
 ```
 import {fetchJson} from "fluture-loaders"

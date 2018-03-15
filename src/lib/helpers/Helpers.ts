@@ -8,27 +8,37 @@ import { sameOrigin, isNil } from "../../utils/Utils";
 import { ImageLoader } from "../loaders/Loaders-Image";
 import { XhrError, XhrLoader, XhrResponseType, XhrLoaderOptions } from "../loaders/Loaders-Xhr";
 
-//generics for simplifying fetch style requests
-export const fletch = <T>(responseType: XhrResponseType) => (endpoint: string) => (options?: XhrLoaderOptions): Future<XhrError, T> =>
-    XhrLoader(endpoint)({ ...options, responseType })
-        .map(xhr => xhr.response);
+//generics for simplifying fetch style requests - uses the "fletch" 
 
-export const fletchUrl = <T>(responseType: XhrResponseType) => (url: string): Future<XhrError, T> =>
-    fletch<T>(responseType)(url)(null);
+//The base function is "fletch" - but after that it's all "fetch*"
+export const fletch = <T>(endpoint:string) => (options?: XhrLoaderOptions): Future<XhrError, T> =>
+    XhrLoader(endpoint)(options).map(xhr => xhr.response);
 
-//Allows all Xhr options, but overrides the responseType and gives appropriate typings
-export const fetchArrayBuffer = fletch<ArrayBuffer>("arraybuffer");
-export const fetchText = fletch<string>("text");
-export const fetchBlob = fletch<Blob>("blob");
-export const fetchXml = fletch<Document | XMLDocument>("document");
+export const fetchUrl = <T>(endpoint:string): Future<XhrError, T> =>
+    fletch<T> (endpoint) (null);
+
+//Fetches the specific data. Overrides the responseType, but otherwise all Xhr settings are allowed
+const _fetchOverride = <T>(responseType: XhrResponseType) => (endpoint: string) => (options?: XhrLoaderOptions): Future<XhrError, T> =>
+    fletch<T> (endpoint) ({ ...options, responseType });
+
+const _fetchUrlOverride = <T>(responseType: XhrResponseType) => (endpoint: string): Future<XhrError, T> =>
+    fletch<T> (endpoint) ({responseType});
+
+export const fetchArrayBuffer = _fetchOverride<ArrayBuffer>("arraybuffer");
+export const fetchText = _fetchOverride<string>("text");
+export const fetchBlob = _fetchOverride<Blob>("blob");
+export const fetchXml = _fetchOverride<Document | XMLDocument>("document");
+
 //Json will use query as default here since it's the typical case here (and can still be overridden)
-export const fetchJson = (endpoint: string) => (options?: XhrLoaderOptions) => fletch<any>("json")(endpoint)({ requestType: "query", ...options });
+export const fetchJson = (endpoint: string) => (options?: XhrLoaderOptions) => _fetchOverride<any>("json")(endpoint)({ requestType: "query", ...options });
 
+
+//wrapper over fletch for cases it's just the url
 //Same as fetch* but without any Xhr options (simple url get)
-export const fetchArrayBufferFromUrl = fletchUrl<ArrayBuffer>("arraybuffer");
-export const fetchJsonFromUrl = fletchUrl<any>("json");
-export const fetchTextFromUrl = fletchUrl<string>("text");
-export const fetchBlobFromUrl = fletchUrl<Blob>("blob");
-export const fetchXmlFromUrl = fletchUrl<Document | XMLDocument>("document");
+export const fetchArrayBufferUrl= _fetchUrlOverride<ArrayBuffer>("arraybuffer");
+export const fetchJsonUrl = _fetchUrlOverride<any>("json");
+export const fetchTextUrl = _fetchUrlOverride<string>("text");
+export const fetchBlobUrl = _fetchUrlOverride<Blob>("blob");
+export const fetchXmlUrl = _fetchUrlOverride<Document | XMLDocument>("document");
 //Image will auto-detect cross-origin settings
-export const fetchImageFromUrl = (url: string) => ImageLoader({ url, crossOrigin: !sameOrigin(url) ? S.Just("anonymous") : S.Nothing });
+export const fetchImageUrl = (url: string) => ImageLoader({ url, crossOrigin: !sameOrigin(url) ? S.Just("anonymous") : S.Nothing });
