@@ -17,6 +17,9 @@
 	"files": [
 		"./src/lib/Lib.ts"
     ],
+    "include": [
+        "**/*.d.ts"
+    ],
     "exclude": [
         "node_modules",
         "dist",
