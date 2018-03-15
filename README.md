@@ -18,7 +18,7 @@ Not battle-tested yet, API may change
 
 # Usage
 
-No docs yet, so for now it's robably easiest just to look at [the loaders](src/lib/loaders) directly :)
+No docs yet, so for now it's robably easiest just to look at [the source](src/lib) directly :)
 
 The easiest way for most use cases is to use the `Fletch` or `FletchUrl` helpers:
 
