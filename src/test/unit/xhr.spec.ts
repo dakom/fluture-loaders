@@ -1,11 +1,11 @@
 import {Future} from "fluture";
-import {Fletch, FletchUrl} from "../../lib/Lib";
+import {fetchJson} from "../../lib/Lib";
 import {S,Maybe,Either} from "../../external/sanctuary/Sanctuary";
 
 const TIMEOUT = 30000;
 
 test('Xhr', (done) => {
-  Fletch.Json("http://httpbin.org/get") ({ 
+  fetchJson("http://httpbin.org/get") ({ 
       data: {
         hello: "world"
       }

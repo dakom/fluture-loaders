@@ -20,10 +20,12 @@ Not battle-tested yet, API may change
 
 No docs yet, so for now it's probably easiest just to look at [the source](src/lib) directly :)
 
-The easiest way for most use cases is to use the `Fletch` or `FletchUrl` [helpers](src/lib/helpers/Fletch.ts):
+The easiest way for most use cases is to use the `fetch*` or `fetchUrl*` [helpers](src/lib/helpers/Helpers.ts):
 
 ```
-Fletch.Json("http://httpbin.org/get") ({ 
+import {fetchJson} from "fluture-loaders"
+
+fetchJson("http://httpbin.org/get") ({ 
     data: { hello: "world" }
 })
 .fork(
