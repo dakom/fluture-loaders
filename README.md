@@ -20,7 +20,7 @@ Not battle-tested yet, API may change
 
 No docs yet, so for now it's robably easiest just to look at [the source](src/lib) directly :)
 
-The easiest way for most use cases is to use the `Fletch` or `FletchUrl` helpers:
+The easiest way for most use cases is to use the `Fletch` or `FletchUrl` [helpers](src/lib/helpers/Fletch.ts):
 
 ```
 Fletch.Json("http://httpbin.org/get") ({ 
