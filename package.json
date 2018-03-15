@@ -1,6 +1,6 @@
 {
   "name": "fluture-loaders",
-  "version": "0.0.9-alpha",
+  "version": "0.1.0-alpha",
   "description": "fluture-loaders",
   "main": "dist/lib.cjs.js",
   "module": "dist/lib.esm.js",

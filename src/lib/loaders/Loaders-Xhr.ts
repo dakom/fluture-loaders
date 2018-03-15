@@ -87,6 +87,6 @@ export const XhrLoader = (endpoint: string) => (options?: Partial<XhrLoaderOptio
         xhr.send();
     }
 
-    return xhr.abort;
+    return () => xhr.abort();
 });
 

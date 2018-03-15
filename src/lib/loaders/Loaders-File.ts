@@ -8,7 +8,7 @@ const _FileLoader = <T>(read:((reader:FileReader) => void)) => (blob:Blob): Futu
 
   read(fileReader);
 
-  return fileReader.abort;
+  return () => fileReader.abort();
 });
 
 export const FileLoader = {
