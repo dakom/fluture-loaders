@@ -14,8 +14,20 @@ Typescript definitions are bundled in.
 
 # Status
 
-Not battle-tested yet...
+Not battle-tested yet, API may change
 
 # Usage
 
-Probably easiest just to look at [the loaders](src/lib/loaders) directly :)
+No docs yet, so for now it's robably easiest just to look at [the loaders](src/lib/loaders) directly :)
+
+The easiest way for most use cases is to use the `Fletch` or `FletchUrl` helpers:
+
+```
+Fletch.Json("http://httpbin.org/get") ({ 
+    args: { hello: "world" }
+})
+.fork(
+    console.error,
+    ({args}) => expect(args.hello).toBe("world")
+)
+```

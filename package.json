@@ -1,6 +1,6 @@
 {
   "name": "fluture-loaders",
-  "version": "0.0.2-alpha",
+  "version": "0.0.3-alpha",
   "description": "fluture-loaders",
   "main": "dist/lib.cjs.js",
   "module": "dist/lib.esm.js",
@@ -52,8 +52,8 @@
     "typescript": "2.7.2",
     "uglify-es": "3.3.9"
   },
-  "dependencies": {
-    "fluture": "^8.0.2",
-    "sanctuary": "0.14.1"
+  "peerDependencies": {
+    "fluture": "8.x",
+    "sanctuary": "0.14.x"
   }
 }

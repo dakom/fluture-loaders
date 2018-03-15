@@ -1,61 +1,40 @@
-import { S, Either, Maybe } from "../external/sanctuary/Sanctuary";
-import { isNil } from "../utils/Utils";
+import { S, Either, Maybe } from "../../external/sanctuary/Sanctuary";
+import { isNil } from "../../utils/Utils";
 import { Future } from "fluture";
 
-export enum XhrLoaderResponseType {
-    BLOB = "blob",
-    ARRAYBUFFER = "arraybuffer",
-    DOCUMENT = "document",
-    JSON = "json",
-    TEXT = "text",
+export interface XhrError {
+    code: number;
+    text: string;
 }
 
-export enum XhrLoaderRequestMethod {
-    GET = "GET",
-    POST = "POST",
-    PUT = "PUT",
-    DELETE = "DELETE"
-}
-
-export enum XhrLoaderRequestDataType {
-    NONE = "none",
-    QUERY = "query",
-    FORM = "form",
-    MULTIPART = "multipart"
-}
-
-export interface XhrLoaderOptions {
+export type XhrResponseType = "blob" | "arraybuffer" | "document" | "json" | "text";
+export type XhrMethod = "GET" | "POST" | "PUT" | "DELETE";
+export type XhrRequestType = "query" | "form" | "multipart";
+export type XhrLoaderOptions = Partial<{
     args: any;
-    method: XhrLoaderRequestMethod;
-    dataType: XhrLoaderRequestDataType;
-    responseType: XhrLoaderResponseType;
-    withCredentials?: boolean;
-    headers?: Array<[string, string]>;
-}
-
-const defaultOptions = {
-    args: null,
-    method: XhrLoaderRequestMethod.GET,
-    requestType: XhrLoaderRequestDataType.QUERY,
-    responseType: XhrLoaderResponseType.JSON
-}
+    method: XhrMethod;
+    responseType: XhrResponseType;
+    requestType: XhrRequestType;
+    withCredentials: boolean;
+    headers: Array<[string, string]>;
+}>
 
 const makeQuery = (args: any): string => {
     let query = '';
-
-    for (var key in args) {
-        if (args.hasOwnProperty(key)) {
-            if (query !== '') {
-                query += '&';
+    if (!isNil(args)) {
+        for (var key in args) {
+            if (args.hasOwnProperty(key)) {
+                if (query !== '') {
+                    query += '&';
+                }
+                query += `${key}=${encodeURIComponent(args[key])}`;
             }
-            query += `${key}=${encodeURIComponent(args[key])}`;
         }
     }
-
     return query;
 }
-export const loadXhr = (endpoint: string) => (options?: Partial<XhrLoaderOptions>): Future<XMLHttpRequest, XMLHttpRequest> => Future((reject, resolve) => {
-    const opts = { ...defaultOptions, ...options };
+export const XhrLoader = (endpoint: string) => (options?: Partial<XhrLoaderOptions>): Future<XhrError, XMLHttpRequest> => Future((reject, resolve) => {
+    const opts = { ...{ method: "GET" }, ...options };
     const xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = () => {
@@ -66,24 +45,24 @@ export const loadXhr = (endpoint: string) => (options?: Partial<XhrLoaderOptions
             }
 
             if (xhr.status !== 200) {
-                reject(xhr);
+                reject({ code: xhr.status, text: xhr.statusText });
             } else {
                 resolve(xhr);
             }
         }
     }
 
-    const query = ((opts.requestType === XhrLoaderRequestDataType.FORM || opts.requestType === XhrLoaderRequestDataType.QUERY) && opts.args !== null)
+    const query = ((opts.requestType === "form" || opts.requestType === "query") && opts.args !== null)
         ? makeQuery(opts.args)
         : "";
 
-    const url = (opts.requestType === XhrLoaderRequestDataType.QUERY && query !== "")
-        ?   `${endpoint}?${query}`
-        :   endpoint;
-    
-    xhr.open(opts.method,url);
+    const url = (opts.requestType === "query" && query !== "")
+        ? `${endpoint}?${query}`
+        : endpoint;
 
-    
+    xhr.open(opts.method, url);
+
+
     xhr.responseType = opts.responseType;
 
     if (opts.withCredentials !== undefined) {
@@ -96,17 +75,18 @@ export const loadXhr = (endpoint: string) => (options?: Partial<XhrLoaderOptions
         });
     };
 
-    if (opts.requestType === XhrLoaderRequestDataType.FORM && query !== "") {
+    if (opts.requestType === "form" && query !== "") {
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         //Not actually allowed by spec, so commenting out.. browser will calculate automatically
         //xhr.setRequestHeader("Content-length", requestData.length);
         xhr.send(query);
 
-    } else if(!isNil(opts.args)) {
+    } else if (!isNil(opts.args)) {
         xhr.send(opts.args);
     } else {
         xhr.send();
     }
 
     return xhr.abort;
-})
+});
+
