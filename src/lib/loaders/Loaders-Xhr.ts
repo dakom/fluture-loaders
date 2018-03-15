@@ -11,7 +11,7 @@ export type XhrResponseType = "blob" | "arraybuffer" | "document" | "json" | "te
 export type XhrMethod = "GET" | "POST" | "PUT" | "DELETE";
 export type XhrRequestType = "query" | "form" | "multipart";
 export type XhrLoaderOptions = Partial<{
-    args: any;
+    data: any;
     method: XhrMethod;
     responseType: XhrResponseType;
     requestType: XhrRequestType;
@@ -52,8 +52,8 @@ export const XhrLoader = (endpoint: string) => (options?: Partial<XhrLoaderOptio
         }
     }
 
-    const query = ((opts.requestType === "form" || opts.requestType === "query") && opts.args !== null)
-        ? makeQuery(opts.args)
+    const query = ((opts.requestType === "form" || opts.requestType === "query") && opts.data !== null)
+        ? makeQuery(opts.data)
         : "";
 
     const url = (opts.requestType === "query" && query !== "")
@@ -81,8 +81,8 @@ export const XhrLoader = (endpoint: string) => (options?: Partial<XhrLoaderOptio
         //xhr.setRequestHeader("Content-length", requestData.length);
         xhr.send(query);
 
-    } else if (!isNil(opts.args)) {
-        xhr.send(opts.args);
+    } else if (!isNil(opts.data)) {
+        xhr.send(opts.data);
     } else {
         xhr.send();
     }

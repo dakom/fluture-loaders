@@ -6,7 +6,7 @@ const TIMEOUT = 30000;
 
 test('Xhr', (done) => {
   Fletch.Json("http://httpbin.org/get") ({ 
-      args: {
+      data: {
         hello: "world"
       }
     })

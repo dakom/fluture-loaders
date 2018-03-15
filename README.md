@@ -24,7 +24,7 @@ The easiest way for most use cases is to use the `Fletch` or `FletchUrl` [helper
 
 ```
 Fletch.Json("http://httpbin.org/get") ({ 
-    args: { hello: "world" }
+    data: { hello: "world" }
 })
 .fork(
     console.error,
