@@ -9,7 +9,6 @@ import { ImageLoader } from "../loaders/Loaders-Image";
 import { XhrError, XhrLoader, XhrResponseType, XhrLoaderOptions } from "../loaders/Loaders-Xhr";
 
 //generics for simplifying fetch style requests - uses the "fletch" 
-
 //The base function is "fletch" - but after that it's all "fetch*"
 export const fletch = <T>(endpoint:string) => (options?: XhrLoaderOptions): Future<XhrError, T> =>
     XhrLoader(endpoint)(options).map(xhr => xhr.response);
@@ -17,13 +16,15 @@ export const fletch = <T>(endpoint:string) => (options?: XhrLoaderOptions): Futu
 export const fetchUrl = <T>(endpoint:string): Future<XhrError, T> =>
     fletch<T> (endpoint) (null);
 
-//Fetches the specific data. Overrides the responseType, but otherwise all Xhr settings are allowed
+
+//internal helpers to keep things DRY
 const _fetchOverride = <T>(responseType: XhrResponseType) => (endpoint: string) => (options?: XhrLoaderOptions): Future<XhrError, T> =>
     fletch<T> (endpoint) ({ ...options, responseType });
 
 const _fetchUrlOverride = <T>(responseType: XhrResponseType) => (endpoint: string): Future<XhrError, T> =>
     fletch<T> (endpoint) ({responseType});
 
+//Fetches the specific data. Overrides the responseType, but otherwise all Xhr settings are allowed
 export const fetchArrayBuffer = _fetchOverride<ArrayBuffer>("arraybuffer");
 export const fetchText = _fetchOverride<string>("text");
 export const fetchBlob = _fetchOverride<Blob>("blob");
@@ -40,5 +41,7 @@ export const fetchJsonUrl = _fetchUrlOverride<any>("json");
 export const fetchTextUrl = _fetchUrlOverride<string>("text");
 export const fetchBlobUrl = _fetchUrlOverride<Blob>("blob");
 export const fetchXmlUrl = _fetchUrlOverride<Document | XMLDocument>("document");
-//Image will auto-detect cross-origin settings
-export const fetchImageUrl = (url: string) => ImageLoader({ url, crossOrigin: !sameOrigin(url) ? S.Just("anonymous") : S.Nothing });
+
+
+//Image is only url, but there is no Xhr case so it's just "fetchImage". Will auto-detect cross-origin settings
+export const fetchImage = (url: string) => ImageLoader({ url, crossOrigin: !sameOrigin(url) ? S.Just("anonymous") : S.Nothing });
