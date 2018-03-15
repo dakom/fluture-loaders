@@ -18,7 +18,7 @@ Not battle-tested yet, API may change
 
 # Usage
 
-No docs yet, so for now it's robably easiest just to look at [the source](src/lib) directly :)
+No docs yet, so for now it's probably easiest just to look at [the source](src/lib) directly :)
 
 The easiest way for most use cases is to use the `Fletch` or `FletchUrl` [helpers](src/lib/helpers/Fletch.ts):
 
