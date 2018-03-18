@@ -7,6 +7,7 @@ import { S, Maybe, Either } from "../../external/sanctuary/Sanctuary";
 import { sameOrigin, isNil } from "../../utils/Utils";
 import { ImageLoader } from "../loaders/Loaders-Image";
 import { XhrError, XhrLoader, XhrResponseType, XhrLoaderOptions } from "../loaders/Loaders-Xhr";
+import {VideoPlayer} from "../loaders/Loaders-Video";
 
 //generics for simplifying fetch style requests - uses the "fletch" 
 //The base function is "fletch" - but after that it's all "fetch*"
@@ -45,3 +46,7 @@ export const fetchXmlUrl = _fetchUrlOverride<Document | XMLDocument>("document")
 
 //Image is only url, but there is no Xhr case so it's just "fetchImage". Will auto-detect cross-origin settings
 export const fetchImage = (url: string) => ImageLoader({ url, crossOrigin: !sameOrigin(url) ? S.Just("anonymous") : S.Nothing });
+
+//Same for video
+export const playVideo = (url:string) => VideoPlayer({ url, crossOrigin: !sameOrigin(url) ? S.Just("anonymous") : S.Nothing });
+
