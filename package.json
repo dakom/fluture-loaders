@@ -1,6 +1,6 @@
 {
   "name": "fluture-loaders",
-  "version": "0.1.2-alpha",
+  "version": "0.1.3-alpha",
   "description": "fluture-loaders",
   "main": "dist/lib.cjs.js",
   "module": "dist/lib.esm.js",
@@ -12,7 +12,10 @@
     "rollup:build": "cross-env NODE_ENV=production rollup -c",
     "rollup:watch": "cross-env NODE_ENV=production rollup -c -w",
     "test": "jest",
-    "test:clear": "jest --clearCache"
+    "test:clear": "jest --clearCache",
+    "doc": "typedoc --out ./doc/ ./src/lib/Lib.ts",
+    "doc:serve": "http-server ./doc --open"
+
   },
   "jest": {
     "transform": {
