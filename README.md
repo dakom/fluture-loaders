@@ -42,6 +42,8 @@ General notes:
 
 2. Crossorigin values are only those allowed by spec (e.g. "anonymous" or "use-credentials") and this _is_ enforced by the type system
 
+3. `fetch` means remote, and `load` is local.
+
 ## Audio
 
 `loadAudioBuffer :: AudioContext -> ArrayBuffer -> Future DOMException AudioBuffer`
@@ -50,9 +52,9 @@ Loads an ArrayBuffer into an AudioBuffer via the supplied AudioContext
 
 ## Blob/File
 
-`BlobLoader :: Generic T => (FileReader -> void) -> Blob -> Future ErrorEvent T`
+`BlobLoader :: Generic T => ([FileReader,Blob] -> void) -> Blob -> Future ErrorEvent T`
 
-Loads a Blob by calling the supplied function, which must accept a FileReader
+Loads a Blob by calling the supplied function, which must accept a FileReader and a Blob
 
 `loadBlobAsArrayBuffer :: Blob -> Future ErrorEvent ArrayBuffer`
 

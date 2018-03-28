@@ -1,6 +1,6 @@
 {
   "name": "fluture-loaders",
-  "version": "0.1.3-alpha",
+  "version": "0.0.1",
   "description": "fluture-loaders",
   "main": "dist/lib.cjs.js",
   "module": "dist/lib.esm.js",
@@ -15,7 +15,6 @@
     "test:clear": "jest --clearCache",
     "doc": "typedoc --out ./doc/ ./src/lib/Lib.ts",
     "doc:serve": "http-server ./doc --open"
-
   },
   "jest": {
     "transform": {
