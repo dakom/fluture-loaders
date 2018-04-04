@@ -19,7 +19,7 @@ const makeQuery = (args: any): string => {
     let query = '';
     if (!isNil(args)) {
         for (var key in args) {
-            if (args.hasOwnProperty(key)) {
+            if (args.hasOwnProperty(key) && !isNil(args[key])) {
                 if (query !== '') {
                     query += '&';
                 }
