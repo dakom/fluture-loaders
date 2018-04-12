@@ -19,7 +19,12 @@ export default [
                 'process.env.NODE_ENV': JSON.stringify( process.env['NODE_ENV'] )
             }),
             typescript({
-                useTsconfigDeclarationDir: true
+                tsconfigOverride: {
+                    compilerOptions: {
+                        declaration: false //will be run as a separate step via tsc which is more thorough
+                    }
+                },
+                useTsconfigDeclarationDir: true,
             })
         ]
 	}

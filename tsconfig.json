@@ -7,6 +7,7 @@
         "declarationDir": "dist/typings",
 		"moduleResolution": "node",
         "diagnostics": true,
+        "outDir": "dist",
         "jsx": "react",
         "lib": [
             "es6",
