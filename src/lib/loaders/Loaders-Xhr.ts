@@ -13,6 +13,7 @@ export type XhrLoaderOptions = Partial<{
     requestType: XhrRequestType;
     withCredentials: boolean;
     headers: Array<[string, string]>;
+    xhr:XMLHttpRequest;
 }>
 
 const makeQuery = (args: any): string => {
@@ -31,7 +32,7 @@ const makeQuery = (args: any): string => {
 }
 export const XhrLoader = (endpoint: string) => (options?: Partial<XhrLoaderOptions>): Future<XMLHttpRequest, XMLHttpRequest> => Future((reject, resolve) => {
     const opts = { ...{ method: "GET" }, ...options };
-    const xhr = new XMLHttpRequest();
+    const xhr = options.xhr ? options.xhr : new XMLHttpRequest();
 
     xhr.onreadystatechange = () => {
 

@@ -1,6 +1,6 @@
 {
   "name": "fluture-loaders",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "fluture-loaders",
   "main": "dist/lib.cjs.js",
   "module": "dist/lib.esm.js",
