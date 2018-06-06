@@ -32,7 +32,10 @@ const makeQuery = (args: any): string => {
 }
 export const XhrLoader = (endpoint: string) => (options?: Partial<XhrLoaderOptions>): Future<XMLHttpRequest, XMLHttpRequest> => Future((reject, resolve) => {
     const opts = { ...{ method: "GET" }, ...options };
-    const xhr = options.xhr ? options.xhr : new XMLHttpRequest();
+    const xhr = opts.xhr !== undefined
+        ? opts.xhr 
+        : new XMLHttpRequest();
+
 
     xhr.onreadystatechange = () => {
 
