@@ -1,8 +1,8 @@
-import { Future } from 'fluture';
+import { Future, FutureInstance} from 'fluture';
 import { Maybe, S } from '../../external/sanctuary/Sanctuary';
 import { sameOrigin, isNil } from "../../utils/Utils";
 
-export const VideoPlayer = ({url, crossOrigin}:{url:string, crossOrigin:Maybe<"anonymous" | "use-credentials">}):Future<ErrorEvent, HTMLVideoElement> => Future((reject, resolve) => {
+export const VideoPlayer = ({url, crossOrigin}:{url:string, crossOrigin:Maybe<"anonymous" | "use-credentials">}):FutureInstance<ErrorEvent, HTMLVideoElement> => Future((reject, resolve) => {
     let playing = false;
     let timeupdate = false;
   

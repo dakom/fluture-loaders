@@ -1,9 +1,9 @@
-import { Future } from 'fluture';
+import { FutureInstance, Future } from 'fluture';
 
-export const BlobLoader = <T>(read:(([FileReader,Blob]) => void)) => (blob:Blob): Future<Event, T> => Future((reject, resolve) => {
+export const BlobLoader = <T extends string | ArrayBuffer>(read:(([FileReader,Blob]) => void)) => (blob:Blob): FutureInstance<Event, T> => Future((reject, resolve) => {
   const fileReader = new FileReader();
 
-  fileReader.onload = () => resolve(fileReader.result);
+  fileReader.onload = () => resolve(fileReader.result as T);
   fileReader.onerror = err => reject(err);
   
   read([fileReader, blob]);

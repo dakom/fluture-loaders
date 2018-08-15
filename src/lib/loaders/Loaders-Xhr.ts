@@ -1,6 +1,6 @@
 import { S, Either, Maybe } from "../../external/sanctuary/Sanctuary";
 import { isNil } from "../../utils/Utils";
-import { Future } from "fluture";
+import { Future, FutureInstance } from "fluture";
 
 
 export type XhrResponseType = "blob" | "arraybuffer" | "document" | "json" | "text";
@@ -30,7 +30,7 @@ const makeQuery = (args: any): string => {
     }
     return query;
 }
-export const XhrLoader = (endpoint: string) => (options?: Partial<XhrLoaderOptions>): Future<XMLHttpRequest, XMLHttpRequest> => Future((reject, resolve) => {
+export const XhrLoader = (endpoint: string) => (options?: Partial<XhrLoaderOptions>): FutureInstance<XMLHttpRequest, XMLHttpRequest> => Future((reject, resolve) => {
     const opts = { ...{ method: "GET" }, ...options };
     const xhr = opts.xhr !== undefined
         ? opts.xhr 
@@ -92,18 +92,18 @@ export const XhrLoader = (endpoint: string) => (options?: Partial<XhrLoaderOptio
 
 //generics for simplifying fetch style requests
 //The base function is "fletch" - but after that it's all "fetch*"
-export const fletch = <T>(endpoint:string) => (options?: XhrLoaderOptions): Future<XMLHttpRequest, T> =>
+export const fletch = <T>(endpoint:string) => (options?: XhrLoaderOptions): FutureInstance<XMLHttpRequest, T> =>
     XhrLoader(endpoint)(options).map(xhr => xhr.response);
 
-export const fetchUrl = <T>(endpoint:string): Future<XMLHttpRequest, T> =>
+export const fetchUrl = <T>(endpoint:string): FutureInstance<XMLHttpRequest, T> =>
     fletch<T> (endpoint) (null);
 
 
 //internal helpers to keep things DRY
-const _fetchOverride = <T>(responseType: XhrResponseType) => (endpoint: string) => (options?: XhrLoaderOptions): Future<XMLHttpRequest, T> =>
+const _fetchOverride = <T>(responseType: XhrResponseType) => (endpoint: string) => (options?: XhrLoaderOptions): FutureInstance<XMLHttpRequest, T> =>
     fletch<T> (endpoint) ({ ...options, responseType });
 
-const _fetchUrlOverride = <T>(responseType: XhrResponseType) => (endpoint: string): Future<XMLHttpRequest, T> =>
+const _fetchUrlOverride = <T>(responseType: XhrResponseType) => (endpoint: string): FutureInstance<XMLHttpRequest, T> =>
     fletch<T> (endpoint) ({responseType});
 
 //Fetches the specific data. Overrides the responseType, but otherwise all Xhr settings are allowed

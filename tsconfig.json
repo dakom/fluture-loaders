@@ -1,11 +1,11 @@
 {
-	"compilerOptions": {
-		"target": "es5",
+    "compilerOptions": {
+        "target": "es5",
         "module": "es2015",
-		"sourceMap": true,
+        "sourceMap": true,
         "declaration": true,
         "declarationDir": "dist/typings",
-		"moduleResolution": "node",
+        "moduleResolution": "node",
         "diagnostics": true,
         "outDir": "dist",
         "jsx": "react",
@@ -14,9 +14,9 @@
             "es5",
             "dom"
         ]
-	},
-	"files": [
-		"./src/lib/Lib.ts"
+    },
+    "files": [
+        "./src/lib/Lib.ts"
     ],
     "include": [
         "**/*.d.ts"
