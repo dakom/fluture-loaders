@@ -8,8 +8,6 @@ Includes Xhr, as well as Audio, Blob, and Image helpers.
 
 Typescript definitions are bundled in.
 
-Some functions require the [Sanctuary](https://sanctuary.js.org) Maybe or Either monads.
-
 # Installation
 
 `npm install --save fluture-loaders`
@@ -70,7 +68,7 @@ Loads a Blob into a text string
 
 ## Image
 
-`ImageLoader :: {url: string, crossOrigin: Maybe string} -> Future ErrorEvent HTMLImageElement`
+`ImageLoader :: {url: string, crossOrigin?: string} -> Future ErrorEvent HTMLImageElement`
 
 Loads an url into an HTMLImageElement. If crossOrigin is a Just then it will be set to the value.
 
@@ -85,7 +83,7 @@ Loads an ArrayBuffer into an HTMLImageElement. Mime type must be supplied.
 
 ## Video
 
-`VideoPlayer :: {url:string, crossOrigin:Maybe string} -> Future ErrorEvent HTMLVideoElement`
+`VideoPlayer :: {url:string, crossOrigin?: string} -> Future ErrorEvent HTMLVideoElement`
 
 Initializes a video and resolves when playback has started
 

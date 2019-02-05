@@ -1,4 +1,3 @@
-import { S, Either, Maybe } from "../../external/sanctuary/Sanctuary";
 import { isNil } from "../../utils/Utils";
 import { Future, FutureInstance } from "fluture";
 

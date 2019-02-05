@@ -6,7 +6,7 @@ import postcss from 'rollup-plugin-postcss';
 export default [
 	{
         input: './src/lib/Lib.ts',
-        external: ['fluture', 'sanctuary'],
+        external: ['fluture'],
         output: [
             { file: pkg.module, format: 'es', sourcemap: true },
             { file: pkg.main, format: 'cjs', sourcemap: true }

@@ -1,8 +1,7 @@
 import { Future, FutureInstance} from 'fluture';
-import { Maybe, S } from '../../external/sanctuary/Sanctuary';
 import { sameOrigin, isNil } from "../../utils/Utils";
 
-export const VideoPlayer = ({url, crossOrigin}:{url:string, crossOrigin:Maybe<"anonymous" | "use-credentials">}):FutureInstance<ErrorEvent, HTMLVideoElement> => Future((reject, resolve) => {
+export const VideoPlayer = ({url, crossOrigin}:{url:string, crossOrigin?:"anonymous" | "use-credentials"}):FutureInstance<ErrorEvent, HTMLVideoElement> => Future((reject, resolve) => {
     let playing = false;
     let timeupdate = false;
   
@@ -12,7 +11,9 @@ export const VideoPlayer = ({url, crossOrigin}:{url:string, crossOrigin:Maybe<"a
     video.muted = true;
     video.loop = true;
 
-    S.map(x => video.crossOrigin = x) (crossOrigin);
+    if(crossOrigin) {
+        video.crossOrigin = crossOrigin;
+    }
     
     const checkReady = () => {
       if (playing && timeupdate) {
@@ -36,4 +37,5 @@ export const VideoPlayer = ({url, crossOrigin}:{url:string, crossOrigin:Maybe<"a
   });
 
 
-export const playVideo = (url:string) => VideoPlayer({ url, crossOrigin: !sameOrigin(url) ? S.Just("anonymous") : S.Nothing });
+export const playVideo = (url:string) => 
+    sameOrigin(url) ? VideoPlayer({url}) : VideoPlayer({url, crossOrigin: "anonymous"}); 

@@ -1,6 +1,5 @@
 import {Future, FutureInstance} from "fluture";
 import {fetchJson} from "../../lib/Lib";
-import {S,Maybe,Either} from "../../external/sanctuary/Sanctuary";
 
 const TIMEOUT = 30000;
 
