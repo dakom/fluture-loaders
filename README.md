@@ -161,6 +161,7 @@ type XhrLoaderOptions = Partial<{
     requestType: XhrRequestType;
     withCredentials: boolean;
     headers: Array<[string, string]>;
+    xhr:XMLHttpRequest;
 }>
 ```
 
